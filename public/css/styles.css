@@ -2,6 +2,7 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
 }
 
 .right-section {
@@ -16,43 +17,51 @@
   top: 130px;
 }
 
+.project-name {
+  position: absolute;
+  left: 1096px;
+  top: 256px;
+  line-height: 180px;
+  font-size: 120px;
+  font-weight: 800;
+  line-height: 180px;
+  letter-spacing: 0em;
+  text-align: left;
+  letter-spacing: 0.1px;
+  color: #2d3d8b;
+}
+
+.project-desc {
+  position: absolute;
+  left: 1096px;
+  top: 444px;
+  font-weight: 500;
+  font-size: 36px;
+  line-height: 45px;
+  color: #6da7b6;
+}
+
 .left-section {
-  font-family: "Montserrat", sans-serif;
-  width: 573px;
-  float: left;
-  margin-top: 230px;
-  margin-left: 43px;
+  position: absolute;
+  width: 1024px;
+  height: 768px;
+  left: 72px;
+  top: 120px;
 }
 
-.left-section h1 {
-  font-weight: 700;
-  font-size: 125px;
-  text-align: left;
-  color: #272343;
-  line-height: 1.15;
-}
-
-.left-section p {
-  font-size: 30px;
-  text-align: left;
-  font-weight: 400;
-  color: #2d334a;
-  margin-left: 6px;
-  margin-bottom: 24px;
-}
-
-.left-section a {
-  font-family: "Montserrat", sans-serif;
-  font-size: 28px;
-  line-height: 51px;
-  font-weight: 600;
-  text-align: center;
-  background-color: #ffd803;
-  color: #272343;
+.get-started-btn {
+  position: absolute;
+  width: 275px;
+  height: 55px;
+  left: 1096px;
+  top: 540px;
+  background: #7f5af0;
+  color: #fffffe;
   text-decoration: none;
-  margin-top: 650px;
-  margin-left: 6px;
-  padding: 6px 42px;
+  text-align: center;
+  line-height: 55px;
+  font-weight: 600;
+  font-size: 26px;
   border-radius: 10px;
 }
 
