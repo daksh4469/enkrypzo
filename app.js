@@ -1,8 +1,12 @@
 const express = require("express");
+const bodyParser = require("body-parser");
 const ejs = require("ejs");
 const mongoose = require("mongoose");
 const passport = require("passport");
 const app = express();
+app.use(express.urlencoded({ extended: true }))
+app.use(express.json());   
+
 
 app.use(express.static("public"));
 app.set("view engine", "ejs");
