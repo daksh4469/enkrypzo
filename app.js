@@ -3,6 +3,7 @@ const bodyParser = require("body-parser");
 const ejs = require("ejs");
 const mongoose = require("mongoose");
 const passport = require("passport");
+const md5 = require("md5");
 
 const app = express();
 
@@ -20,6 +21,8 @@ const userSchema = new mongoose.Schema({
   password: String,
 });
 
+const User = mongoose.model("User", userSchema);
+
 app.get("/", function (req, res) {
   res.sendFile(__dirname + "/index.html");
 });
@@ -29,10 +32,38 @@ app.get("/login", function (req, res) {
 });
 
 app.post("/login", (req,res) => {
+  const username = req.body.username;
+  const password = md5(req.body.password);
+  console.log(username + " " + password);
+  User.findOne({username:username}, function(err,foundUser){
+    if(err){
+      console.log(err);
+    }
+    else{
+      if(foundUser){
+        if(foundUser.password === password){
+          console.log("Successfully logged in");
+          res.send("Successfully logged in");
+        }
+      }
+    }
+  })
+});
+
+app.post("/register", function (req, res) {
   const user = new User({
-    username: req.body.email,
-    password: req.body.password,
+    username: req.body.username,
+    password: md5(req.body.password),
   });
+  console.log(user);
+  user.save(function(err){
+    if(err){
+      console.log(err);
+    }
+    else{
+      res.render("login");
+    }
+  })
 });
 
 app.get("/register", function (req, res) {
