@@ -10,6 +10,8 @@ const app = express();
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json());   
 app.use(express.static("public"));
+app.use('/favicon.ico', express.static('images/favicon.ico'));
+
 app.set("view engine", "ejs");
 
 const dbsURI = 'mongodb+srv://Enkrypzo:enkrypzo@encclus.m4q6d.mongodb.net/Enkrypzo?retryWrites=true&w=majority';
