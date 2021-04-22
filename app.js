@@ -8,6 +8,8 @@ app.use(express.urlencoded({ extended: true }))
 app.use(express.json());   
 
 
+const dbsURI = 'mongodb+srv://Enkrypzo:enkrypzo@encclus.m4q6d.mongodb.net/Enkrypzo?retryWrites=true&w=majority';
+mongoose.connect(dbsURI,{useNewUrlParser: true, useUnifiedTopology: true});
 app.use(express.static("public"));
 app.set("view engine", "ejs");
 
