@@ -35,10 +35,10 @@ app.get("/login", function (req, res) {
 });
 
 app.post("/login", (req,res) => {
-  const username = req.body.username;
+  const email = req.body.email;
   const password = md5(req.body.password);
-  console.log(username + " " + password);
-  User.findOne({username:username}, function(err,foundUser){
+  console.log(email + " " + password);
+  User.findOne({email:email}, function(err,foundUser){
     if(err){
       console.log(err);
     }

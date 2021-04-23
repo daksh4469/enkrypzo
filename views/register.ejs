@@ -37,15 +37,20 @@
           <br>
           <input type="password" name="confirmpassword" required>
         </div>
-        <span class="warning-register">Passwords do not match... Try Again</span>
+        <!-- <span class="warning-register">Passwords do not match... Try Again</span> -->
         <button type="submit" class="register-btn">Sign Up</button>
       </form>
     </div>
 
     <div class="form-register-footer">
       <span>Already have an account? </span>
-      <button class="login-redirect">Login</button>
+      <button id="lbtn" class="login-redirect">Login</button>
     </div>
     <script src="../app.js"></script>
+    <script type="text/javascript">
+      document.getElementById("lbtn").onclick = function () {
+        location.href = "/login";
+      };
+    </script>
   </body>
 </html>

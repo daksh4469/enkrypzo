@@ -155,3 +155,58 @@
   border-radius: 20px;
   cursor: pointer;
 }
+
+.form-login {
+  margin-top: 320px;
+}
+
+.login-heading {
+  position: absolute;
+  left: 1096px;
+  top: 96px;
+  line-height: 180px;
+  font-size: 120px;
+  font-weight: 800;
+  text-align: left;
+  color: #2d3d8b;
+}
+
+.login-btn {
+  position: absolute;
+  width: 596px;
+  height: 90px;
+  left: 1096px;
+  top: 572px;
+  border: 1px solid #2cb67d;
+  background: linear-gradient(180deg, #7f5af0 0%, rgba(127, 90, 240, 0.8) 100%);
+  border-radius: 50px;
+  color: #fffffe;
+  font-size: 42px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.form-login-footer {
+  margin-top: 180px;
+  margin-left: 1096px;
+}
+
+.form-login-footer span {
+  color: #6da7b6;
+  font-weight: 600;
+  font-size: 24px;
+  line-height: 42px;
+}
+
+.register-redirect {
+  margin-left: 20px;
+  width: 280px;
+  height: 42px;
+  background: #2cb67d;
+  border: none;
+  color: #fffffe;
+  font-weight: 600;
+  font-size: 16px;
+  border-radius: 20px;
+  cursor: pointer;
+}
