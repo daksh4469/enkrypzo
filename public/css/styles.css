@@ -108,7 +108,7 @@
   width: 596px;
   height: 90px;
   left: 1096px;
-  top: 720px;
+  top: 750px;
   border: 1px solid #2cb67d;
   background: linear-gradient(180deg, #2cb67d 0%, rgba(44, 182, 125, 0.8) 100%);
   border-radius: 50px;
@@ -120,6 +120,15 @@
 
 .register-btn:hover {
   background-color: #7f5af0;
+}
+
+.warning-register {
+  color: red;
+  position: absolute;
+  visibility: hidden;
+  left: 1096px;
+  width: 540px;
+  text-align: center;
 }
 
 .form-register-footer {

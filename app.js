@@ -20,6 +20,7 @@ mongoose.set("useCreateIndex", true);
 
 const userSchema = new mongoose.Schema({
   username: String,
+  email: String,
   password: String,
 });
 
@@ -55,17 +56,26 @@ app.post("/login", (req,res) => {
 app.post("/register", function (req, res) {
   const user = new User({
     username: req.body.username,
+    email: req.body.email,
     password: md5(req.body.password),
   });
-  console.log(user);
-  user.save(function(err){
-    if(err){
-      console.log(err);
-    }
-    else{
-      res.render("login");
-    }
-  })
+
+  if(req.body.password === req.body.confirmpassword){
+    console.log(user);
+    user.save(function(err){
+      if(err){
+        console.log(err);
+      }
+      else{
+        res.render("login");
+      }
+    });
+  }
+  else{
+    console.log("Passwords do not match");
+    res.redirect("/");
+  }
+  
 });
 
 app.get("/register", function (req, res) {
