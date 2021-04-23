@@ -177,13 +177,17 @@
   height: 90px;
   left: 1096px;
   top: 572px;
-  border: 1px solid #2cb67d;
+  border: none;
   background: linear-gradient(180deg, #7f5af0 0%, rgba(127, 90, 240, 0.8) 100%);
   border-radius: 50px;
   color: #fffffe;
   font-size: 42px;
   font-weight: 600;
   cursor: pointer;
+}
+
+.login-btn:hover {
+  background-color: #2cb67d;
 }
 
 .form-login-footer {
