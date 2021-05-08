@@ -11,9 +11,12 @@
     <link rel="stylesheet" href="./css/styles.css" />
   </head>
   <body>
+    <div class="container">
     <div class="left-section">
-      <img src="images/login.png" />
+      <img class="pic" src="images/login.png" />
     </div>
+    <div class="right-section">
+
     <div class="form-login">
       <h1 class="login-heading">LoGin</h1>
       <form action="/login" method="POST">
@@ -40,9 +43,12 @@
         <button type="submit" class="login-btn">Login</button>
       </form>
     </div>
-    <div class="form-login-footer">
-      <span>Don't have an account? </span>
+    <div class="footer">
+      <span class="span">Don't have an account? </span>
       <button id="rbtn" class="register-redirect">Create New</button>
+  </div>
+</div>
+
     </div>
     <script type="text/javascript">
       document.getElementById("rbtn").onclick = function () {
