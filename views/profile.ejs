@@ -19,7 +19,7 @@
   <div class="container">
     <div class="row">
       <div class="col-md-6 m-auto">
-        <h1 class="text-center display-4 my-4">Mongo File Uploads</h1>
+        <h1 class="text-center display-4 my-4"><%= user.username %>'s files</h1>
         <form action="/upload" method="POST" enctype="multipart/form-data">
           <div class="custom-file mb-3">
             <input type="file" name="file" id="file" class="custom-file-input">
