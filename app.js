@@ -10,6 +10,10 @@ const GridFsStorage = require('multer-gridfs-storage');
 const Grid = require('gridfs-stream');
 const methodOverride = require('method-override');
 const { Stream } = require("stream");
+const File = require("File");
+var fs=require("fs")
+const encrypt = require('node-file-encrypt');
+
 const app = express();
 
 app.use(express.urlencoded({ extended: true }))
@@ -25,6 +29,20 @@ mongoose.connect(dbsURI,{useNewUrlParser: true, useUnifiedTopology: true});
 const conn=mongoose.createConnection(dbsURI,{useNewUrlParser: true, useUnifiedTopology: true});
 
 mongoose.set("useCreateIndex", true);
+
+var storagedisk =   multer.diskStorage({  
+  destination: function (req, file, callback) {  
+    callback(null, './tmp');  
+  },  
+  filename: function (req, file, callback) {  
+    callback(null, file.originalname);  
+  }  
+});  
+var uploaddisk = multer({ storage : storagedisk}).single('file');
+let encryptpath="";
+
+
+
 
 const userSchema = new mongoose.Schema({
   username: String,
@@ -108,7 +126,7 @@ const storage = new GridFsStorage({
         if (err) {
           return reject(err);
         }
-        const filename = buf.toString('hex') + path.extname(file.originalname);
+        const filename = file.originalname;
         const uploader = currUser.username;
         const fileInfo = {
           metadata:{
@@ -121,12 +139,47 @@ const storage = new GridFsStorage({
         resolve(fileInfo);
       });
     });
-  }
+  },
 });
-const upload = multer({ storage });
-app.post('/upload',upload.single('file'),(req,res) => {
-  res.redirect('/profile');
+const upload = multer({ storage:storage }); 
+
+function fileUpload(req, res, next) {
+  console.log('file')
+  upload.single('file');
+}
+app.post('/uploaddisk',upload.single('file'),function(req,res){
+  const {file}=req;
+  console.log(file);
+  // let efile;
+  // uploaddisk(req,res,function(err) {
+  //     if(err) {
+  //         return res.end("Error uploading file.");  
+  //     }
+  //     res.end("File is uploaded successfully!");  
+  //     console.log(res.req.file.originalname);
+  //     const path=`tmp/${res.req.file.originalname}`;
+  //     let f = new encrypt.FileEncrypt(path);
+  //     f.openSourceFile();
+  //     f.encrypt('111111');
+  //     efile=f;
+  //     encryptPath = f.encryptFilePath;
+  //     // console.log("encrypt sync done",encryptPath);
+  //     fs.unlinkSync(path);
+
+
+      // let d=new encrypt.FileEncrypt(encryptPath);
+      // d.openSourceFile();
+      // d.decrypt('111111');
+  // });
+  res.redirect("/profile");
 });
+// function uploadtogfs(file){
+//   console.log(file);
+//   upload.single(file);
+// }
+// app.post('/upload',upload.single('file'),(req,res) => {
+//   res.redirect('/profile');
+// });
 
 
 app.get('/profile', (req, res) => {
