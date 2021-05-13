@@ -14,8 +14,15 @@ const { Stream } = require("stream");
 const File = require("File");
 var fs=require("fs")
 const encrypt = require('node-file-encrypt');
-
+var RSA = require('hybrid-crypto-js').RSA;
+var Crypt = require('hybrid-crypto-js').Crypt;
+var crypt = new Crypt();
+var rsa = new RSA();
 const app = express();
+
+var storagemem = multer.memoryStorage()
+var uploadmem = multer({ storage: storagemem })
+
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
@@ -82,7 +89,25 @@ app.post("/login", (req, res) => {
       }
     }
   });
+}); 
+
+app.post('/encryptfile',uploadmem.single('file'),function(req,res,err){
+  let uploadedfile=req.file;
+  console.log(uploadedfile);
+  rsa.generateKeyPair(function(keyPair) {
+  let publicKey = keyPair.publicKey;
+  let privateKey = keyPair.privateKey;
+  // console.log(publicKey,privateKey);
+  let encrypted = crypt.encrypt(publicKey,uploadedfile.buffer);
+  console.log(encrypted);
+  
+  let decrypted = crypt.decrypt(privateKey, encrypted);
+  console.log(decrypted);
 });
+// console.log("2",file);
+if(err) console.log(err);
+res.send("submission completed");
+})
 
 app.post("/register", function (req, res) {
   const user = new User({
@@ -126,12 +151,12 @@ const storage = new GridFsStorage({
         if (err) {
           return reject(err);
         }
-        const filename = file.originalname;
+        const filename = buf.toString('hex') + path.extname('txt');
         const uploader = currUser.username;
         const fileInfo = {
           metadata: {
             uploader: uploader,
-            ofn: file.originalname,
+            ofn: file.filename,
           },
           filename: filename,
           bucketName: "uploads",
@@ -142,46 +167,48 @@ const storage = new GridFsStorage({
   },
 });
 const upload = multer({ storage:storage }); 
-
-function fileUpload(req, res, next) {
-  console.log('file')
-  upload.single('file');
+const getFile = (fileName) => {
+  return new Promise((resolve, reject) => {
+    fs.readFile(fileName, (err, data) => {
+      if (err) {
+        reject(err)  // calling `reject` will cause the promise to fail with or without the error passed as an argument
+        return        // and we don't want to go any further
+      }
+      resolve(data)
+    })
+  })
 }
-app.post('/uploaddisk',upload.single('file'),function(req,res){
-  const {file}=req;
-  console.log(file);
-  // let efile;
-  // uploaddisk(req,res,function(err) {
-  //     if(err) {
-  //         return res.end("Error uploading file.");  
-  //     }
-  //     res.end("File is uploaded successfully!");  
-  //     console.log(res.req.file.originalname);
-  //     const path=`tmp/${res.req.file.originalname}`;
-  //     let f = new encrypt.FileEncrypt(path);
-  //     f.openSourceFile();
-  //     f.encrypt('111111');
-  //     efile=f;
-  //     encryptPath = f.encryptFilePath;
-  //     // console.log("encrypt sync done",encryptPath);
-  //     fs.unlinkSync(path);
-
-
-      // let d=new encrypt.FileEncrypt(encryptPath);
-      // d.openSourceFile();
-      // d.decrypt('111111');
-  // });
-const upload = multer({ storage });
-app.post("/upload", upload.single("file"), (req, res) => {
-  res.redirect("/profile");
-});
-// function uploadtogfs(file){
-//   console.log(file);
-//   upload.single(file);
-// }
-// app.post('/upload',upload.single('file'),(req,res) => {
-//   res.redirect('/profile');
+// app.post('/uploaddisk',function(req,res){
+//   let efile;
+//   uploaddisk(req,res,function(err) {
+//       if(err) {
+//           return res.end("Error uploading file.");  
+//       }
+//       res.end("File is uploaded successfully!");  
+//       const path=`tmp/${res.req.file.originalname}`;
+//       let f = new encrypt.FileEncrypt(path);
+//       f.openSourceFile();
+//       f.encrypt('111111');
+//       efile=f;
+//       encryptPath = f.encryptFilePath;
+//       fs.unlinkSync(path);
+//       var efiledata;
+//       getFile(`tmp/${efile.encryptFileName}`)
+//         .then(data => uploadtogfs(efile,data))
+//         .catch(err => console.error(err))
+      
+//       // let d=new encrypt.FileEncrypt(encryptPath);
+//       // d.openSourceFile();
+//       // d.decrypt('111111');
+//     })
 // });
+// function uploadtogfs(file,data){
+//   storage._handleFile(req,file,data => {
+//     stream:data;
+//     originalname:"testname";
+//   });
+//   console.log(file);
+// }
 
 app.get("/profile", (req, res) => {
   gfs.files.find().toArray((err, files) => {

@@ -17,6 +17,7 @@
     "express": "^4.17.1",
     "fs": "0.0.1-security",
     "gridfs-stream": "^1.1.1",
+    "hybrid-crypto-js": "^0.2.4",
     "md5": "^2.3.0",
     "method-override": "^3.0.0",
     "mongoose": "^5.12.5",
