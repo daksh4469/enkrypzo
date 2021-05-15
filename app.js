@@ -180,7 +180,7 @@ app.post("/upload", function (req, res) {
   } else
     uploaddisk(req, res, function (err, event) {
       if (err) {
-        return res.end("Error uploading file.");
+        return res.send("Error uploading file.");
       }
       const filename = res.req.file.originalname;
       const path = `tmp/${filename}`;
@@ -191,8 +191,6 @@ app.post("/upload", function (req, res) {
       res.send(key);
       const encfile = encryptfile(path, key);
       uploadtogfs(encfile);
-      res.end("submission completed");
-      // res.redirect('/profile');
     });
 });
 
