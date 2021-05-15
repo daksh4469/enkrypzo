@@ -1,64 +1,58 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
-    crossorigin="anonymous">
-  <style>
-    img {
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+      crossorigin="anonymous">
+    <style>
+      img {
       width: 100%;
-    }
-  </style>
-  <title>Please upload your files!!</title>
-</head>
-
-<body>
-  <div class="container">
-    <div class="row">
-      <div class="col-md-6 m-auto">
-        <h1 class="text-center display-4 my-4"><%= user.username %>'s files</h1>
-        <form action="/encryptfile" method="POST" enctype="multipart/form-data">
-          <div class="custom-file mb-3">
-            <input type="file" name="file" id="file" class="custom-file-input">
-            <label for="file" class="custom-file-label">Choose File</label>
+      }
+    </style>
+    <title>Please upload your files!!</title>
+  </head>
+  <body>
+    <div class="container">
+      <div class="row">
+        <div class="col-md-6 m-auto">
+          <h1 class="text-center display-4 my-4"><%= user.username %>'s files</h1>
+          <form action="/upload" onsubmit="getcoords(event)" method="POST" enctype="multipart/form-data">
+            <div class="custom-file mb-3">
+              <input type="file" name="file" id="file" class="custom-file-input">
+              <label for="file" class="custom-file-label">Choose File</label>
+            </div>
+            <input type="submit" value="Submit" class="btn btn-primary btn-block">
+          </form>
+          <hr>
+          <% if(files
+            ){ %>
+          <% files.filter(file => file.metadata.uploader==user.username).forEach(function(file) { %>
+          <div class="card card-body mb-3">
+            <%= file.filename %>
+            <form method="POST" action="/files/<%= file._id %>?_method=DELETE">
+              <button class="btn btn-danger btn-block mt-4">Delete</button>
+            </form>
+            <form method="POST" action="/download/<%= file.filename %>?_method=GET">
+              <button class="btn btn-primary btn-block mt-4">Download</button>
+              <input type="text" name="inputkey" id="inputkey" class="custom-text-input">
+              <label for="inputkey" class="custom-text-label" >input key to download your file</label>
+            </form>
           </div>
-          <input type="submit" value="Submit" class="btn btn-primary btn-block">
-        </form>
-        <hr>
-        <% if(files
-        ){ %>
-            <% files.filter(file => file.metadata.uploader==user.username).forEach(function(file) { %>
-              <div class="card card-body mb-3">
-                <% if(file.isImage) { %>
-                  <img src="image/<%= file.filename %>" alt="">
-                  <% } else { %>
-                    <%= file.metadata.ofn %>
-                      <% } %>
-                        <form method="POST" action="/files/<%= file._id %>?_method=DELETE">
-                          <button class="btn btn-danger btn-block mt-4">Delete</button>
-                        </form>
-                        <form method="POST" action="/files/<%= file.filename %>?_method=GET" enctype="multipart/form-data">
-                            <button class="btn btn-primary btn-block mt-4">Download</button>
-                          </form>
-              </div>
-              <% }) %>
-                <% } else { %>
-                  <p>No files to show</p>
-                  <% } %>
+          <% }) %>
+          <% } else { %>
+          <p>No files to show</p>
+          <% } %>
+        </div>
       </div>
     </div>
-  </div>
-
-  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-    crossorigin="anonymous"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
-    crossorigin="anonymous"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-    crossorigin="anonymous"></script>
-  <script src="../app.js"></script>
-</body>
-
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+      crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+      crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+      crossorigin="anonymous"></script>
+    <script src="../app.js"></script>
+  </body>
 </html>
