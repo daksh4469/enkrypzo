@@ -173,7 +173,10 @@ function createkey(){
 
 // the upload url
 app.post('/upload', function(req, res) {
-  uploaddisk(req, res, function(err, event) {
+  if (currUser.username == null) {
+    res.redirect('/login');
+  }
+  else uploaddisk(req, res, function(err, event) {
     if (err) {
       return res.end("Error uploading file.");
     }
@@ -215,6 +218,10 @@ const decryptfile = (path,inputkey) => {
 
 // function to download the file
 app.get("/download/:filename", (req, res) => {
+  if (currUser.username == null) {
+    res.redirect('/login');
+  } 
+  else{
   const inputkey=req.body.inputkey;
   if(inputkey!=""){
   gfs.files.findOne({
@@ -263,11 +270,16 @@ app.get("/download/:filename", (req, res) => {
 else{
   res.end("please fill the input key and try again");
 }
+  }
 });
 
 // function to delete files
 app.delete("/files/:id", (req, res) => {
-  gfs.remove({
+  if (currUser.username == null) {
+    res.redirect('/login');
+  } 
+  else{
+    gfs.remove({
     _id: req.params.id,
     root: "fs"
   }, (err, gridStore) => {
@@ -278,6 +290,7 @@ app.delete("/files/:id", (req, res) => {
     }
     res.redirect("/profile");
   });
+}
 });
 
 // app port
