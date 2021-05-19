@@ -214,3 +214,44 @@
   border-radius: 20px;
   cursor: pointer;
 }
+
+.main-container {
+  width: 80%;
+  margin-left: -120px;
+}
+
+.profile-img {
+  position: absolute;
+  bottom: 16px;
+  right: 16px;
+}
+
+.user-heading {
+  margin-top: 40px;
+  margin-bottom: 32px;
+  font-size: 64px;
+  font-weight: 800;
+  color: #2d3d8b;
+}
+
+.input-label {
+  margin-top: 16px;
+}
+
+.key-input {
+  width: 75%;
+}
+
+.logout-redirect {
+  margin-left: 85%;
+  margin-top: 24px;
+  width: 240px;
+  height: 42px;
+  background: #e53170;
+  border: none;
+  color: #fffffe;
+  font-weight: 600;
+  font-size: 16px;
+  border-radius: 20px;
+  cursor: pointer;
+}

@@ -6,18 +6,16 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
       crossorigin="anonymous">
-    <style>
-      img {
-      width: 100%;
-      }
-    </style>
-    <title>Please upload your files!!</title>
+      <link rel="stylesheet" href="./css/styles.css" />
+    <title>Dashboard</title>
   </head>
   <body>
-    <div class="container">
+    <img src='images/profile.png' class="profile-img">
+    <button id="lbtn" class="logout-redirect">Logout</button>
+    <div class="main-container">
       <div class="row">
         <div class="col-md-6 m-auto">
-          <h1 class="text-center display-4 my-4"><%= user.username %>'s files</h1>
+          <h1 class="user-heading"><%= user.username %>'s files</h1>
           <form action="/upload" onsubmit="getcoords(event)" method="POST" enctype="multipart/form-data">
             <div class="custom-file mb-3">
               <input type="file" name="file" id="file" class="custom-file-input">
@@ -36,8 +34,8 @@
             </form>
             <form method="POST" action="/download/<%= file.filename %>?_method=GET">
               <button class="btn btn-primary btn-block mt-4">Download</button>
-              <input type="text" name="inputkey" id="inputkey" class="custom-text-input">
-              <label for="inputkey" class="custom-text-label" >input key to download your file</label>
+              <label for="inputkey" class="input-label" >Input the key to download your file:</label>
+              <input type="text" name="inputkey" id="inputkey" class="key-input">
             </form>
           </div>
           <% }) %>
