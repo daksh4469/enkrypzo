@@ -295,6 +295,12 @@ app.delete("/files/:id", (req, res) => {
   }
 });
 
+// function to logout
+app.get("/logout",(req,res) => {
+  currUser={};
+  res.redirect("/login");
+});
+
 // app port
 app.listen(3000, function () {
   console.log("Server is up and Running!!!");
